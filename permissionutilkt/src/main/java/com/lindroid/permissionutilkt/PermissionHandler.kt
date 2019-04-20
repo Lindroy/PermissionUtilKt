@@ -1,6 +1,8 @@
 package com.lindroid.permissionutilkt
 
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
 
 /**
  * @author Lin
@@ -11,25 +13,34 @@ import android.support.v4.app.FragmentActivity
 private const val TAG = "PermissionHandler"
 
 internal class PermissionHandler private constructor() {
+
     constructor(activity: FragmentActivity) : this() {
-        getPermFragment(activity)
+        getPermFragment(activity.supportFragmentManager)
+    }
+
+    constructor(fragment: Fragment):this(){
+        getPermFragment(fragment.childFragmentManager)
+    }
+
+    constructor(fm: FragmentManager):this(){
+        getPermFragment(fm)
     }
 
     private var permFragment: PermissionFragment? = null
 
-    private fun getPermFragment(activity: FragmentActivity): PermissionFragment {
-        permFragment = activity.supportFragmentManager.findFragmentByTag(TAG) as PermissionFragment?
+    private fun getPermFragment(fm: FragmentManager): PermissionFragment {
+        permFragment = fm.findFragmentByTag(TAG) as PermissionFragment?
         if (permFragment == null) {
             permFragment = PermissionFragment()
-            activity.supportFragmentManager.beginTransaction()
+            fm.beginTransaction()
                 .add(permFragment!!,TAG)
                 .commitAllowingStateLoss()
-            activity.supportFragmentManager.executePendingTransactions()
+            fm.executePendingTransactions()
         }
         return permFragment!!
     }
 
-    fun request(vararg permissions:String,callback:(grantResults: IntArray, shouldShowRationales: BooleanArray) -> Unit){
+    fun request(vararg permissions:String,callback:(grantResults: IntArray, showRationales: BooleanArray) -> Unit){
         permFragment?.requestPermissions(permissions,callback)
 
     }

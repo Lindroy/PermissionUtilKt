@@ -4,9 +4,8 @@ import android.Manifest
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.lindroid.permissionutilkt.R
-import com.lindroid.permissionutilkt.isPermGranted
-import com.lindroid.permissionutilkt.permRequest
+import android.widget.Toast
+import com.lindroid.permissionutilkt.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -31,8 +30,15 @@ class MainActivity : AppCompatActivity() {
 
 
 
-            permRequest(Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA){granted, rationale ->
-                Log.e("Tag","permRequest")
+
+        }
+
+        btnCombined.setOnClickListener {
+            permRequestCombined(Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA){granted, showRationale ->
+                if (granted){
+                    Toast.makeText(this,"你同意了所有的权限",Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
     }

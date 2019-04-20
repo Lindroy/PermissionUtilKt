@@ -3,11 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.lindroid.demo.MainActivity">
 
     <Button
         android:id="@+id/btnCall"
-        android:text="拨打电话"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拨打电话" />
+
+    <Button
+        android:id="@+id/btnCombined"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

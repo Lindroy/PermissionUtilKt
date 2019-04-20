@@ -1,14 +1,15 @@
 package com.lindroid.permissionutilkt
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import kotlin.random.Random
 
 const val Tag = "Tag"
 class PermissionFragment : Fragment() {
 
+    @SuppressLint("UseSparseArrays")
     private val callbacks =
         HashMap<Int, (grantResults: IntArray, shouldShowRationales: BooleanArray) -> Unit>()
 
@@ -25,7 +26,6 @@ class PermissionFragment : Fragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.e(Tag,"权限回调")
         val shouldShowRationales = permissions.map {
             shouldShowRequestPermissionRationale(it)
         }.toBooleanArray()
